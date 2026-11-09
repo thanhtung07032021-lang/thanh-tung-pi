@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://socialchain.app https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com">
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<title>Xoa bóp bấm huyệt Thanh Tùng</title>
+<style>
+:root{--ink:#1d2a24;--brand:#14532d;--paper:#fbf8f1;--line:#6b7a70}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:20px/1.55 system-ui,sans-serif}
+header{background:var(--brand);color:#fff;padding:32px 20px}
+main,header>div{max-width:640px;margin:0 auto}
+main{padding:8px 20px 40px}
+h1{font-size:32px;line-height:1.25;margin:0 0 10px}
+h2{font-size:26px;margin:36px 0 10px;color:var(--brand)}
+header p{margin:0}
+ul{padding:0;margin:0;list-style:none}
+li{padding:12px 0;border-bottom:1px solid var(--line)}
+li b{display:block}
+label{display:block;font-weight:700;margin:16px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+button,a.btn{display:block;width:100%;margin:12px 0;padding:15px;border:2px solid var(--brand);border-radius:8px;font:inherit;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;background:var(--brand);color:#fff}
+a.alt,button.alt{background:#fff;color:var(--brand)}
+header a.btn{background:#fff;color:var(--brand);border-color:#fff}
+:focus-visible{outline:3px solid #b45309;outline-offset:2px}
+#out{white-space:pre-wrap;background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px;margin-top:12px}
+[hidden]{display:none}
+</style>
+</head>
+<body>
+<header><div>
+<h1>Xoa bóp bấm huyệt Thanh Tùng</h1>
+<p>Xoa bóp, bấm huyệt y học cổ truyền, hỗ trợ giảm đau mỏi và thư giãn cơ thể.</p>
+<a class="btn" href="tel:0931414139">Gọi đặt lịch: 0931 41 41 39</a>
+</div></header>
+<main>
+<h2>Dịch vụ và giá</h2>
+<ul>
+<li><b>Bấm huyệt toàn thân</b>300.000 đồng một buổi</li>
+<li><b>Hỗ trợ đau cổ vai gáy</b>200.000 đồng một buổi</li>
+<li><b>Hỗ trợ đau thắt lưng</b>200.000 đồng một buổi</li>
+<li><b>Hỗ trợ thoát vị đĩa đệm</b>200.000 đồng một buổi</li>
+<li><b>Hỗ trợ suy giãn tĩnh mạch</b>200.000 đồng một buổi</li>
+<li><b>Giác hơi</b>100.000 đồng một lần</li>
+<li><b>Phiếu liệu trình</b>Mua 10 buổi, tặng 1 buổi</li>
+</ul>
+<p>Dịch vụ có tác dụng hỗ trợ, kết quả khác nhau tùy từng người. Dịch vụ không thay thế việc khám và điều trị của bác sĩ. Nếu đang dùng thuốc, xin tiếp tục theo chỉ định của bác sĩ.</p>
+
+<h2>Đặt lịch</h2>
+<p>Anh chị điền thông tin, rồi gửi tin nhắn cho cơ sở. Ứng dụng không lưu thông tin của anh chị.</p>
+<form id="f" novalidate>
+<label for="ten">Họ tên</label><input id="ten" autocomplete="name" required>
+<label for="sdt">Số điện thoại</label><input id="sdt" type="tel" autocomplete="tel" required>
+<label for="dv">Dịch vụ</label>
+<select id="dv" required>
+<option value="">Chọn dịch vụ</option>
+<option>Bấm huyệt toàn thân</option><option>Hỗ trợ đau cổ vai gáy</option><option>Hỗ trợ đau thắt lưng</option><option>Hỗ trợ thoát vị đĩa đệm</option><option>Hỗ trợ suy giãn tĩnh mạch</option><option>Giác hơi</option>
+</select>
+<label for="ngay">Ngày đến</label><input id="ngay" type="date" required>
+<label for="gio">Giờ đến</label><input id="gio" type="time" required>
+<label for="gc">Ghi chú, không bắt buộc</label><textarea id="gc" rows="2"></textarea>
+<button type="submit">Tạo tin nhắn đặt lịch</button>
+</form>
+<p id="err" role="alert"></p>
+<div id="kq" hidden>
+<p>Lịch chưa được gửi. Anh chị chọn một cách bên dưới để gửi cho cơ sở.</p>
+<div id="out" tabindex="-1"></div>
+<button type="button" class="alt" id="copy">Sao chép tin nhắn</button>
+<p id="ok" role="status"></p>
+<a class="btn alt" href="https://zalo.me/0931414139">Mở Zalo của cơ sở</a>
+<a class="btn alt" id="sms" href="sms:0931414139">Gửi tin nhắn điện thoại</a>
+</div>
+
+<h2>Liên hệ</h2>
+<p>Địa chỉ: 128/31 Lê Đức Thọ, Phường An Nhơn.</p>
+<p>Số điện thoại: 0931 41 41 39.</p>
+<p>Mở cửa tất cả các ngày. Thứ 2 đến thứ 7 từ 8 giờ sáng đến 7 giờ tối. Chủ nhật từ 8 giờ sáng đến 5 giờ chiều.</p>
+<a class="btn" href="tel:0931414139">Gọi 0931 41 41 39</a>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)},msg='';
+$('f').addEventListener('submit',function(e){
+e.preventDefault();$('err').textContent='';$('kq').hidden=true;
+var t=$('ten').value.trim(),s=$('sdt').value.trim(),d=$('dv').value,n=$('ngay').value,g=$('gio').value;
+if(!t||!s||!d||!n||!g){$('err').textContent='Anh chị vui lòng điền đủ họ tên, số điện thoại, dịch vụ, ngày và giờ.';return}
+var p=n.split('-'),cn=new Date(+p[0],+p[1]-1,+p[2]).getDay()===0,h=g.split(':'),m=+h[0]*60+ +h[1],het=cn?1020:1140;
+if(m<480||m>het){$('err').textContent=cn?'Chủ nhật cơ sở mở từ 8 giờ sáng đến 5 giờ chiều.':'Thứ 2 đến thứ 7 cơ sở mở từ 8 giờ sáng đến 7 giờ tối.';return}
+msg='Chào cơ sở Thanh Tùng, tôi muốn đặt lịch.\nHọ tên: '+t+'\nSố điện thoại: '+s+'\nDịch vụ: '+d+'\nNgày: '+p[2]+'/'+p[1]+'/'+p[0]+'\nGiờ: '+g;
+var c=$('gc').value.trim();if(c)msg+='\nGhi chú: '+c;
+$('out').textContent=msg;$('ok').textContent='';
+$('sms').href='sms:0931414139?body='+encodeURIComponent(msg);
+$('kq').hidden=false;$('out').focus();
+});
+$('copy').addEventListener('click',function(){
+var o=$('ok');
+if(!navigator.clipboard){o.textContent='Chưa sao chép được. Anh chị vui lòng gọi cho cơ sở.';return}
+navigator.clipboard.writeText(msg).then(function(){o.textContent='Đã sao chép tin nhắn.'},function(){o.textContent='Chưa sao chép được. Anh chị vui lòng gọi cho cơ sở.'});
+});
+</script>
+<script>
+var piSessionToken=null;
+(async function(){
+try{
+if(!window.Pi)return;
+await Pi.init({version:"2.0"});
+var a=await Pi.authenticate(["username"],function(){});
+var r=await fetch("https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com/pi/auth/v1/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accessToken:a.accessToken})});
+if(r.ok){piSessionToken=(await r.json()).sessionToken}
+}catch(e){console.log("Pi Auth:",e)}
+})();
+</script>
+</body>
+</html>
