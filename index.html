@@ -2,113 +2,297 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14532d">
 <meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://socialchain.app https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com https://docs.google.com">
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <title>Xoa bóp bấm huyệt Thanh Tùng</title>
 <style>
-:root{--ink:#1d2a24;--brand:#14532d;--paper:#fbf8f1;--line:#6b7a70}
+:root{--ink:#1f2a24;--muted:#56645b;--brand:#14532d;--brand2:#1f7a45;--soft:#e8f3ec;--gold:#b7791f;--paper:#f7f4ec;--card:#fff;--line:#dfe6e1;--r:16px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:20px/1.55 system-ui,sans-serif}
-header{background:var(--brand);color:#fff;padding:32px 20px}
-main,header>div{max-width:640px;margin:0 auto}
-main{padding:8px 20px 40px}
-h1{font-size:32px;line-height:1.25;margin:0 0 10px}
-h2{font-size:26px;margin:36px 0 10px;color:var(--brand)}
-header p{margin:0}
-ul{padding:0;margin:0;list-style:none}
-li{padding:12px 0;border-bottom:1px solid var(--line)}
-li b{display:block}
-label{display:block;font-weight:700;margin:16px 0 4px}
-input,select,textarea{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
-button,a.btn{display:block;width:100%;margin:12px 0;padding:15px;border:2px solid var(--brand);border-radius:8px;font:inherit;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;background:var(--brand);color:#fff}
-a.alt,button.alt{background:#fff;color:var(--brand)}
-header a.btn{background:#fff;color:var(--brand);border-color:#fff}
+html{scroll-behavior:smooth;scroll-padding-top:12px}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+a{color:var(--brand)}
+svg{width:1em;height:1em;flex:none}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+/* Đầu trang */
+header{background:linear-gradient(160deg,#14532d,#1f7a45);color:#fff;padding:28px 0 64px;border-radius:0 0 28px 28px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:54px;height:54px;border-radius:14px;background:#fff;color:var(--brand);display:grid;place-items:center;font-size:30px}
+h1{font-size:26px;line-height:1.25;margin:0}
+.sub{margin:14px 0 0;opacity:.95}
+.hello{margin:10px 0 0;font-weight:600;color:#fde9b8}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.badge{background:rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;font-size:15px}
+/* Thẻ trạng thái mở cửa + nút nhanh */
+.quick{margin-top:-44px;background:var(--card);border-radius:var(--r);box-shadow:0 6px 24px rgba(20,83,45,.14);padding:14px}
+.status{display:flex;align-items:center;gap:8px;font-weight:600;margin:0 0 12px}
+.dot{width:12px;height:12px;border-radius:50%;background:#9ca3af;flex:none}
+.dot.on{background:#16a34a;box-shadow:0 0 0 4px #dcfce7}
+.dot.off{background:#dc2626;box-shadow:0 0 0 4px #fee2e2}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qbtn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;background:var(--soft);color:var(--brand);text-decoration:none;font-size:15px;font-weight:600;text-align:center}
+.qbtn svg{font-size:26px}
+/* Mục */
+section{margin-top:32px}
+h2{font-size:22px;margin:0 0 4px;color:var(--brand)}
+.hint{margin:0 0 14px;color:var(--muted);font-size:16px}
+/* Thẻ dịch vụ */
+.svc{display:grid;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;gap:12px;align-items:flex-start}
+.ico{width:48px;height:48px;border-radius:12px;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-size:26px;flex:none}
+.card .body{flex:1;min-width:0}
+.card h3{font-size:18px;margin:0}
+.card p{margin:2px 0 8px;color:var(--muted);font-size:15px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.price{font-size:20px;font-weight:800;color:var(--brand)}
+.price small{font-size:14px;font-weight:500;color:var(--muted)}
+.pick{border:2px solid var(--brand);background:#fff;color:var(--brand);border-radius:999px;padding:7px 14px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.tag{display:inline-block;background:#fdf3dc;color:#8a5a12;border-radius:999px;padding:1px 9px;font-size:13px;font-weight:700;margin-left:6px;vertical-align:2px}
+.promo{background:linear-gradient(135deg,#fff7e6,#fdecc8);border:1px solid #f3d9a4;border-radius:var(--r);padding:14px;display:flex;gap:12px;align-items:center}
+.promo .ico{background:#fff;color:var(--gold)}
+/* Tích điểm */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 8px;text-align:center}
+.step b{display:block;font-size:24px;color:var(--brand)}
+.step span{font-size:14px;color:var(--muted)}
+/* Vì sao chọn */
+.why{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.why li{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.why svg{color:var(--brand2);font-size:22px;margin-top:2px}
+.note{font-size:14px;color:var(--muted);margin-top:12px}
+/* Đặt lịch */
+.form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+label,.lbl{display:block;font-weight:700;margin:16px 0 6px}
+label:first-child{margin-top:0}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{border-color:var(--brand2);outline:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:16px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.chip:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+#ngay{margin-top:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:12px 0 0;padding:15px;border:2px solid var(--brand);border-radius:12px;font:inherit;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;background:var(--brand);color:#fff}
+.btn.alt{background:#fff;color:var(--brand)}
+.btn.zalo{background:#0068ff;border-color:#0068ff}
+#err{color:#b91c1c;font-weight:600}
+#kq{margin-top:16px;background:var(--soft);border-radius:var(--r);padding:14px}
+#out{white-space:pre-wrap;background:#fff;border:1px dashed var(--brand2);border-radius:12px;padding:12px;margin-top:8px;font-size:16px}
+/* Liên hệ */
+.contact p{margin:6px 0;display:flex;gap:10px;align-items:flex-start}
+.contact svg{color:var(--brand2);font-size:22px;margin-top:3px}
+.hours{display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin:4px 0 0}
+.hours .today{font-weight:800;color:var(--brand)}
+footer{text-align:center;color:var(--muted);font-size:14px;margin:32px 0 8px}
+/* Thanh dưới cùng */
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:9}
+.bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border-radius:12px;text-decoration:none;font-weight:700;font-size:16px}
+.bar .b1{background:var(--soft);color:var(--brand)}
+.bar .b2{background:var(--brand);color:#fff;flex:1.4}
 :focus-visible{outline:3px solid #b45309;outline-offset:2px}
-#out{white-space:pre-wrap;background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px;margin-top:12px}
-[hidden]{display:none}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
-<header><div>
-<h1>Xoa bóp bấm huyệt Thanh Tùng</h1>
-<p>Xoa bóp, bấm huyệt y học cổ truyền, hỗ trợ giảm đau mỏi và thư giãn cơ thể.</p>
-<a class="btn" href="tel:0931414139">Gọi đặt lịch: 0931 41 41 39</a>
-</div></header>
-<main>
-<h2>Dịch vụ và giá</h2>
-<ul id="bg">
-<li><b>Bấm huyệt toàn thân</b><span data-ma="toanthan">300.000</span> đồng một buổi</li>
-<li><b>Hỗ trợ đau cổ vai gáy</b><span data-ma="covaigay">250.000</span> đồng một buổi</li>
-<li><b>Hỗ trợ đau thắt lưng</b><span data-ma="thatlung">250.000</span> đồng một buổi</li>
-<li><b>Hỗ trợ thoát vị đĩa đệm</b><span data-ma="thoatvi">250.000</span> đồng một buổi</li>
-<li><b>Hỗ trợ suy giãn tĩnh mạch</b><span data-ma="tinhmach">250.000</span> đồng một buổi</li>
-<li><b>Châm cứu</b><span data-ma="chamcuu">300.000</span> đồng một buổi</li>
-<li><b>Châm cứu kết hợp bấm huyệt</b><span data-ma="chamcuubh">400.000</span> đồng một buổi</li>
-<li><b>Giác hơi</b><span data-ma="giachoi">100.000</span> đồng một lần</li>
-<li><b>Phiếu liệu trình</b>Mua 10 buổi, tặng 1 buổi</li>
-</ul>
-<h2>Tích điểm thành viên</h2>
-<ul>
-<li><b>Mỗi lần đến</b>Được 1 điểm</li>
-<li><b>10 điểm</b>Đổi 1 lần giác hơi</li>
-<li><b>20 điểm</b>Đổi 1 buổi bấm huyệt toàn thân</li>
-</ul>
-<p>Tích điểm và đặt lịch có trong ứng dụng Bấm huyệt Thanh Tùng trên điện thoại Android.</p>
-<h2>Kỹ thuật viên</h2>
-<p>Kỹ thuật viên có kinh nghiệm, được đào tạo tại các trường như Viện Y học Dân tộc, Đại học Y Dược.</p>
-<p>Dịch vụ có tác dụng hỗ trợ, kết quả khác nhau tùy từng người. Dịch vụ không thay thế việc khám và điều trị của bác sĩ. Nếu đang dùng thuốc, xin tiếp tục theo chỉ định của bác sĩ.</p>
 
-<h2>Đặt lịch</h2>
-<p>Anh chị điền thông tin, rồi gửi tin nhắn cho cơ sở. Ứng dụng không lưu thông tin của anh chị.</p>
-<form id="f" novalidate>
-<label for="ten">Họ tên</label><input id="ten" autocomplete="name" required>
-<label for="sdt">Số điện thoại</label><input id="sdt" type="tel" autocomplete="tel" required>
-<label for="dv">Dịch vụ</label>
+<svg class="sr" aria-hidden="true">
+<symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 1-2z"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3zM5 9v10h14V9zm2 2h4v4H7z"/></symbol>
+<symbol id="i-hand" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2a1.5 1.5 0 0 1 1.5 1.5V10h1V5a1.5 1.5 0 0 1 3 0v8.5A8.5 8.5 0 0 1 10 22a6 6 0 0 1-5.2-3l-3-5.3a1.5 1.5 0 0 1 2.6-1.5L6 15V4.5a1.5 1.5 0 0 1 3 0V10h1V3.5A1.5 1.5 0 0 1 11.5 2z"/></symbol>
+<symbol id="i-neck" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-2 3.5V13l6 2.5a2 2 0 0 1 1 1.8V21H3v-3.7a2 2 0 0 1 1-1.8L10 13v-2.5A4 4 0 0 1 8 7V6a4 4 0 0 1 4-4z"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path fill="currentColor" d="M11 2h2v3h-2zm0 5h2v3h-2zm0 5h2v3h-2zm0 5h2v5h-2zM7 4h3v2H7zm7 0h3v2h-3zM6 9h4v2H6zm8 0h4v2h-4zm-8 5h4v2H6zm8 0h4v2h-4z"/></symbol>
+<symbol id="i-leg" viewBox="0 0 24 24"><path fill="currentColor" d="M9 2h5l-.5 9 1.5 7 4 2v2H8l.5-4L9 11z"/></symbol>
+<symbol id="i-needle" viewBox="0 0 24 24"><path fill="currentColor" d="M19.3 2.3l2.4 2.4-1.4 1.4-1-1L7.6 16.8l.7.7-1.4 1.4-.7-.7L3 21l-1-1 2.8-3.2-.7-.7 1.4-1.4.7.7L17.9 3.7l-1-1z"/></symbol>
+<symbol id="i-cup" viewBox="0 0 24 24"><path fill="currentColor" d="M5 4h14l-1.5 9A5.5 5.5 0 0 1 12 18a5.5 5.5 0 0 1-5.5-5zM8 20h8v2H8z"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1zM9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v8h7v-8zm9 0v8h7v-8z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.2-4.3-4.3 1.4-1.4 2.9 2.9 5.8-5.8 1.4 1.4z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.4 3.5 2.1-1 1.7L11 13V6h2z"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path fill="currentColor" d="M20 3S9 2 5 9c-2.3 4-1 8 1 10l-3 3 1.4 1.4 3-3c2 1.6 6 2.6 9.6 0C22 16 20 3 20 3zM8 16c2-4 5-6 8-7-3 2-5.5 4.5-7 8z"/></symbol>
+</svg>
+
+<header>
+<div class="wrap">
+<div class="brand"><div class="logo" aria-hidden="true"><svg><use href="#i-leaf"/></svg></div><h1>Xoa bóp bấm huyệt Thanh Tùng</h1></div>
+<p class="sub">Xoa bóp, bấm huyệt y học cổ truyền. Hỗ trợ giảm đau mỏi, giúp cơ thể thư giãn.</p>
+<p class="hello" id="hello" hidden></p>
+<div class="badges"><span class="badge">Hơn 20 năm trong nghề</span><span class="badge">Mở cửa tất cả các ngày</span></div>
+</div>
+</header>
+
+<main class="wrap">
+
+<div class="quick">
+<p class="status" id="status" role="status"><span class="dot" id="dot"></span><span id="stxt">Giờ mở cửa: 8 giờ sáng mỗi ngày</span></p>
+<nav class="grid4" aria-label="Thao tác nhanh">
+<a class="qbtn" href="tel:0931414139"><svg aria-hidden="true"><use href="#i-phone"/></svg>Gọi</a>
+<a class="qbtn" href="https://zalo.me/0931414139"><svg aria-hidden="true"><use href="#i-chat"/></svg>Zalo</a>
+<a class="qbtn" href="https://www.google.com/maps/search/?api=1&query=128%2F31+L%C3%AA+%C4%90%E1%BB%A9c+Th%E1%BB%8D%2C+Ph%C6%B0%E1%BB%9Dng+An+Nh%C6%A1n%2C+TP.+H%E1%BB%93+Ch%C3%AD+Minh"><svg aria-hidden="true"><use href="#i-map"/></svg>Chỉ đường</a>
+<a class="qbtn" href="#datlich"><svg aria-hidden="true"><use href="#i-cal"/></svg>Đặt lịch</a>
+</nav>
+</div>
+
+<section id="dichvu" aria-labelledby="h-dv">
+<h2 id="h-dv">Dịch vụ và giá</h2>
+<p class="hint">Bấm "Chọn" để đặt lịch ngay dịch vụ đó.</p>
+<div class="svc">
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-hand"/></svg></div><div class="body"><h3>Bấm huyệt toàn thân<span class="tag">Được chọn nhiều</span></h3><p>Thư giãn cả người, giảm mệt mỏi sau ngày dài.</p><div class="row"><span class="price"><span data-ma="toanthan">300.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Bấm huyệt toàn thân">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-neck"/></svg></div><div class="body"><h3>Hỗ trợ đau cổ vai gáy</h3><p>Hợp với người ngồi máy tính lâu, mỏi cổ, cứng gáy.</p><div class="row"><span class="price"><span data-ma="covaigay">250.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Hỗ trợ đau cổ vai gáy">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-back"/></svg></div><div class="body"><h3>Hỗ trợ đau thắt lưng</h3><p>Giúp vùng lưng dưới bớt căng, cử động nhẹ nhàng hơn.</p><div class="row"><span class="price"><span data-ma="thatlung">250.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Hỗ trợ đau thắt lưng">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-back"/></svg></div><div class="body"><h3>Hỗ trợ thoát vị đĩa đệm</h3><p>Xoa bóp, bấm huyệt nhẹ nhàng theo tình trạng từng người.</p><div class="row"><span class="price"><span data-ma="thoatvi">250.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Hỗ trợ thoát vị đĩa đệm">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-leg"/></svg></div><div class="body"><h3>Hỗ trợ suy giãn tĩnh mạch</h3><p>Giúp chân bớt nặng, bớt mỏi khi đứng lâu.</p><div class="row"><span class="price"><span data-ma="tinhmach">250.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Hỗ trợ suy giãn tĩnh mạch">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-needle"/></svg></div><div class="body"><h3>Châm cứu</h3><p>Châm cứu theo y học cổ truyền.</p><div class="row"><span class="price"><span data-ma="chamcuu">300.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Châm cứu">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-needle"/></svg></div><div class="body"><h3>Châm cứu kết hợp bấm huyệt</h3><p>Kết hợp hai cách trong cùng một buổi.</p><div class="row"><span class="price"><span data-ma="chamcuubh">400.000</span>đ <small>một buổi</small></span><button class="pick" data-dv="Châm cứu kết hợp bấm huyệt">Chọn</button></div></div></div>
+<div class="card"><div class="ico" aria-hidden="true"><svg><use href="#i-cup"/></svg></div><div class="body"><h3>Giác hơi</h3><p>Làm riêng hoặc thêm vào sau buổi bấm huyệt.</p><div class="row"><span class="price"><span data-ma="giachoi">100.000</span>đ <small>một lần</small></span><button class="pick" data-dv="Giác hơi">Chọn</button></div></div></div>
+<div class="promo"><div class="ico" aria-hidden="true"><svg><use href="#i-gift"/></svg></div><div><b>Phiếu liệu trình</b><br>Mua 10 buổi, tặng thêm 1 buổi.</div></div>
+</div>
+</section>
+
+<section aria-labelledby="h-td">
+<h2 id="h-td">Tích điểm thành viên</h2>
+<p class="hint">Càng đến nhiều, càng được tặng nhiều.</p>
+<div class="steps">
+<div class="step"><b>1</b><span>điểm mỗi lần đến</span></div>
+<div class="step"><b>10</b><span>điểm đổi 1 lần giác hơi</span></div>
+<div class="step"><b>20</b><span>điểm đổi 1 buổi bấm huyệt toàn thân</span></div>
+</div>
+<p class="note">Tích điểm có trong ứng dụng Bấm huyệt Thanh Tùng trên điện thoại Android, hoặc hỏi cơ sở khi đến.</p>
+</section>
+
+<section aria-labelledby="h-vs">
+<h2 id="h-vs">Vì sao chọn Thanh Tùng</h2>
+<ul class="why">
+<li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Làm nghề xoa bóp bấm huyệt từ năm 2002. Học bài bản tại Viện Y học Dân tộc.</span></li>
+<li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Hỏi kỹ tình trạng trước khi làm. Mỗi người một cách làm riêng.</span></li>
+<li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Hướng dẫn bài tập và thói quen tốt để tự chăm sóc tại nhà.</span></li>
+<li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Giá rõ ràng, không ép mua gói.</span></li>
+</ul>
+<p class="note">Dịch vụ có tác dụng hỗ trợ, kết quả khác nhau tùy từng người. Dịch vụ không thay thế việc khám và điều trị của bác sĩ. Nếu đang dùng thuốc, xin tiếp tục theo chỉ định của bác sĩ.</p>
+</section>
+
+<section id="datlich" aria-labelledby="h-dl">
+<h2 id="h-dl">Đặt lịch nhanh</h2>
+<p class="hint">Chỉ 3 bước: chọn dịch vụ, chọn ngày giờ, gửi Zalo. Ứng dụng không lưu thông tin của anh chị.</p>
+<form id="f" class="form" novalidate>
+<label for="dv">1. Dịch vụ</label>
 <select id="dv" required>
 <option value="">Chọn dịch vụ</option>
 <option>Bấm huyệt toàn thân</option><option>Hỗ trợ đau cổ vai gáy</option><option>Hỗ trợ đau thắt lưng</option><option>Hỗ trợ thoát vị đĩa đệm</option><option>Hỗ trợ suy giãn tĩnh mạch</option><option>Châm cứu</option><option>Châm cứu kết hợp bấm huyệt</option><option>Giác hơi</option>
 </select>
-<label for="ngay">Ngày đến</label><input id="ngay" type="date" required>
-<label for="gio">Giờ đến</label><input id="gio" type="time" required>
-<label for="gc">Ghi chú, không bắt buộc</label><textarea id="gc" rows="2"></textarea>
-<button type="submit">Tạo tin nhắn đặt lịch</button>
-</form>
-<p id="err" role="alert"></p>
-<div id="kq" hidden>
-<p>Lịch chưa được gửi. Anh chị chọn một cách bên dưới để gửi cho cơ sở.</p>
-<div id="out" tabindex="-1"></div>
-<button type="button" class="alt" id="copy">Sao chép tin nhắn</button>
-<p id="ok" role="status"></p>
-<a class="btn alt" href="https://zalo.me/0931414139">Mở Zalo của cơ sở</a>
-<a class="btn alt" id="sms" href="sms:0931414139">Gửi tin nhắn điện thoại</a>
-</div>
 
-<h2>Liên hệ</h2>
-<p>Địa chỉ: 128/31 Lê Đức Thọ, Phường An Nhơn.</p>
-<p>Số điện thoại: 0931 41 41 39.</p>
-<p>Mở cửa tất cả các ngày. Thứ 2 đến thứ 7 từ 8 giờ sáng đến 7 giờ tối. Chủ nhật từ 8 giờ sáng đến 5 giờ chiều.</p>
-<a class="btn" href="tel:0931414139">Gọi 0931 41 41 39</a>
+<span class="lbl" id="l-ngay">2. Ngày đến</span>
+<div class="chips" id="days" role="group" aria-labelledby="l-ngay"></div>
+<input id="ngay" type="date" aria-label="Chọn ngày khác" hidden>
+
+<span class="lbl" id="l-gio">Giờ đến</span>
+<div class="chips" id="slots" role="group" aria-labelledby="l-gio"><span class="hint">Chọn ngày trước nhé.</span></div>
+
+<label for="ten">3. Họ tên</label><input id="ten" autocomplete="name" required>
+<label for="sdt">Số điện thoại</label><input id="sdt" type="tel" inputmode="tel" autocomplete="tel" required>
+<label for="gc">Ghi chú, không bắt buộc</label><textarea id="gc" rows="2" placeholder="Ví dụ: đi 2 người, đau vai bên phải"></textarea>
+<button class="btn" type="submit"><svg aria-hidden="true"><use href="#i-cal"/></svg>Tạo tin nhắn đặt lịch</button>
+<p id="err" role="alert"></p>
+</form>
+
+<div id="kq" hidden>
+<b>Gần xong rồi.</b> Lịch chưa được gửi. Anh chị bấm một nút bên dưới để gửi cho cơ sở.
+<div id="out" tabindex="-1"></div>
+<a class="btn zalo" id="zalo" href="https://zalo.me/0931414139"><svg aria-hidden="true"><use href="#i-chat"/></svg>Sao chép và mở Zalo</a>
+<a class="btn alt" id="sms" href="sms:0931414139"><svg aria-hidden="true"><use href="#i-chat"/></svg>Gửi tin nhắn điện thoại</a>
+<button type="button" class="btn alt" id="copy">Chỉ sao chép tin nhắn</button>
+<p id="ok" role="status"></p>
+</div>
+</section>
+
+<section class="contact" aria-labelledby="h-lh">
+<h2 id="h-lh">Liên hệ</h2>
+<div class="form">
+<p><svg aria-hidden="true"><use href="#i-map"/></svg><span>128/31 Lê Đức Thọ, Phường An Nhơn, TP. Hồ Chí Minh</span></p>
+<p><svg aria-hidden="true"><use href="#i-phone"/></svg><a href="tel:0931414139">0931 41 41 39</a></p>
+<p><svg aria-hidden="true"><use href="#i-clock"/></svg><span class="hours"><span id="h1">Thứ 2 đến thứ 7</span><span>8 giờ sáng đến 7 giờ tối</span><span id="h2">Chủ nhật</span><span>8 giờ sáng đến 5 giờ chiều</span></span></p>
+</div>
+</section>
+
+<footer>Xoa bóp bấm huyệt Thanh Tùng</footer>
 </main>
+
+<nav class="bar" aria-label="Liên hệ nhanh">
+<a class="b1" href="tel:0931414139"><svg aria-hidden="true"><use href="#i-phone"/></svg>Gọi</a>
+<a class="b1" href="https://zalo.me/0931414139"><svg aria-hidden="true"><use href="#i-chat"/></svg>Zalo</a>
+<a class="b2" href="#datlich"><svg aria-hidden="true"><use href="#i-cal"/></svg>Đặt lịch</a>
+</nav>
+
 <script>
-var $=function(i){return document.getElementById(i)},msg='';
+var $=function(i){return document.getElementById(i)},msg='',ngay='',gio='';
+var DOW=['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+function gioDong(d){return d.getDay()===0?17:19}
+function pad(n){return(n<10?'0':'')+n}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+
+/* Trạng thái mở cửa */
+(function(){
+var d=new Date(),h=d.getHours()+d.getMinutes()/60,c=gioDong(d),dot=$('dot'),t=$('stxt');
+if(h>=8&&h<c){dot.className='dot on';t.textContent='Đang mở cửa, đến '+(c===17?'5 giờ chiều':'7 giờ tối')}
+else if(h<8){dot.className='dot off';t.textContent='Chưa mở cửa. Hôm nay mở lúc 8 giờ sáng'}
+else{dot.className='dot off';t.textContent='Đã nghỉ. Ngày mai mở lúc 8 giờ sáng'}
+(d.getDay()===0?$('h2'):$('h1')).className='today';
+})();
+
+/* Chọn ngày */
+function setPressed(box,btn){[].forEach.call(box.querySelectorAll('.chip'),function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')})}
+function chip(text,fn){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=text;b.setAttribute('aria-pressed','false');b.onclick=fn;return b}
+(function(){
+var box=$('days'),today=new Date();
+['Hôm nay','Ngày mai','Ngày kia'].forEach(function(name,i){
+var d=new Date(today.getFullYear(),today.getMonth(),today.getDate()+i);
+var b=chip(name+', '+DOW[d.getDay()].toLowerCase()+' '+d.getDate()+'/'+(d.getMonth()+1),function(){setPressed(box,b);$('ngay').hidden=true;pickDay(d)});
+if(i===0&&today.getHours()+1>=gioDong(today))b.disabled=true;
+box.appendChild(b);
+});
+var o=chip('Ngày khác',function(){setPressed(box,o);var n=$('ngay');n.hidden=false;n.min=iso(today);n.focus();if(n.value)n.onchange()});
+box.appendChild(o);
+$('ngay').onchange=function(){var p=this.value.split('-');if(p.length===3)pickDay(new Date(+p[0],+p[1]-1,+p[2]))};
+})();
+
+/* Chọn giờ */
+function pickDay(d){
+ngay=iso(d);gio='';
+var box=$('slots'),now=new Date(),isToday=iso(now)===ngay,last=gioDong(d)-1;
+box.innerHTML='';
+for(var m=8*60;m<=last*60;m+=30){(function(m){
+var hh=Math.floor(m/60),mm=m%60,lbl=hh+'h'+(mm?'30':'');
+var b=chip(lbl,function(){setPressed(box,b);gio=pad(hh)+':'+pad(mm)});
+b.setAttribute('aria-label',hh+' giờ'+(mm?' 30':''));
+if(isToday&&m<=now.getHours()*60+now.getMinutes()+30)b.disabled=true;
+box.appendChild(b);
+})(m)}
+}
+
+/* Bấm "Chọn" ở thẻ dịch vụ */
+[].forEach.call(document.querySelectorAll('.pick'),function(b){b.onclick=function(){$('dv').value=b.dataset.dv;$('datlich').scrollIntoView();$('dv').focus()}});
+
+/* Tạo tin nhắn */
 $('f').addEventListener('submit',function(e){
 e.preventDefault();$('err').textContent='';$('kq').hidden=true;
-var t=$('ten').value.trim(),s=$('sdt').value.trim(),d=$('dv').value,n=$('ngay').value,g=$('gio').value;
-if(!t||!s||!d||!n||!g){$('err').textContent='Anh chị vui lòng điền đủ họ tên, số điện thoại, dịch vụ, ngày và giờ.';return}
-var p=n.split('-'),cn=new Date(+p[0],+p[1]-1,+p[2]).getDay()===0,h=g.split(':'),m=+h[0]*60+ +h[1],het=cn?1020:1140;
-if(m<480||m>het){$('err').textContent=cn?'Chủ nhật cơ sở mở từ 8 giờ sáng đến 5 giờ chiều.':'Thứ 2 đến thứ 7 cơ sở mở từ 8 giờ sáng đến 7 giờ tối.';return}
-msg='Chào cơ sở Thanh Tùng, tôi muốn đặt lịch.\nHọ tên: '+t+'\nSố điện thoại: '+s+'\nDịch vụ: '+d+'\nNgày: '+p[2]+'/'+p[1]+'/'+p[0]+'\nGiờ: '+g;
+var t=$('ten').value.trim(),s=$('sdt').value.trim(),d=$('dv').value,thieu=[];
+if(!d)thieu.push('dịch vụ');if(!ngay)thieu.push('ngày');if(!gio)thieu.push('giờ');if(!t)thieu.push('họ tên');if(!s)thieu.push('số điện thoại');
+if(thieu.length){$('err').textContent='Anh chị vui lòng chọn hoặc điền: '+thieu.join(', ')+'.';return}
+var p=ngay.split('-'),thu=DOW[new Date(+p[0],+p[1]-1,+p[2]).getDay()];
+msg='Chào cơ sở Thanh Tùng, tôi muốn đặt lịch.\nHọ tên: '+t+'\nSố điện thoại: '+s+'\nDịch vụ: '+d+'\nNgày: '+thu+', '+p[2]+'/'+p[1]+'/'+p[0]+'\nGiờ: '+gio;
 var c=$('gc').value.trim();if(c)msg+='\nGhi chú: '+c;
 $('out').textContent=msg;$('ok').textContent='';
 $('sms').href='sms:0931414139?body='+encodeURIComponent(msg);
 $('kq').hidden=false;$('out').focus();
 });
-$('copy').addEventListener('click',function(){
+function copy(cb){
 var o=$('ok');
-if(!navigator.clipboard){o.textContent='Chưa sao chép được. Anh chị vui lòng gọi cho cơ sở.';return}
-navigator.clipboard.writeText(msg).then(function(){o.textContent='Đã sao chép tin nhắn.'},function(){o.textContent='Chưa sao chép được. Anh chị vui lòng gọi cho cơ sở.'});
-});
+if(!navigator.clipboard){o.textContent='Chưa sao chép được. Anh chị có thể gọi cho cơ sở.';cb&&cb();return}
+navigator.clipboard.writeText(msg).then(function(){o.textContent='Đã sao chép. Anh chị dán vào ô chat Zalo rồi gửi.';cb&&cb()},function(){o.textContent='Chưa sao chép được. Anh chị có thể gọi cho cơ sở.';cb&&cb()});
+}
+$('copy').onclick=function(){copy()};
+$('zalo').onclick=function(e){e.preventDefault();var u=this.href;copy(function(){location.href=u})};
 </script>
 <script>
 var piSessionToken=null;
@@ -117,6 +301,7 @@ try{
 if(!window.Pi)return;
 await Pi.init({version:"2.0"});
 var a=await Pi.authenticate(["username"],function(){});
+if(a&&a.user&&a.user.username){var h=document.getElementById('hello');h.textContent='Xin chào @'+a.user.username+'. Chúc anh chị một ngày khỏe.';h.hidden=false}
 var r=await fetch("https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com/pi/auth/v1/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accessToken:a.accessToken})});
 if(r.ok){piSessionToken=(await r.json()).sessionToken}
 }catch(e){console.log("Pi Auth:",e)}
