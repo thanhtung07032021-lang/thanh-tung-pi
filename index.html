@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://socialchain.app https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com">
+<meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://socialchain.app https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com https://docs.google.com">
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <title>Xoa bóp bấm huyệt Thanh Tùng</title>
 <style>
@@ -37,15 +37,26 @@ header a.btn{background:#fff;color:var(--brand);border-color:#fff}
 </div></header>
 <main>
 <h2>Dịch vụ và giá</h2>
-<ul>
-<li><b>Bấm huyệt toàn thân</b>300.000 đồng một buổi</li>
-<li><b>Hỗ trợ đau cổ vai gáy</b>200.000 đồng một buổi</li>
-<li><b>Hỗ trợ đau thắt lưng</b>200.000 đồng một buổi</li>
-<li><b>Hỗ trợ thoát vị đĩa đệm</b>200.000 đồng một buổi</li>
-<li><b>Hỗ trợ suy giãn tĩnh mạch</b>200.000 đồng một buổi</li>
-<li><b>Giác hơi</b>100.000 đồng một lần</li>
+<ul id="bg">
+<li><b>Bấm huyệt toàn thân</b><span data-ma="toanthan">300.000</span> đồng một buổi</li>
+<li><b>Hỗ trợ đau cổ vai gáy</b><span data-ma="covaigay">250.000</span> đồng một buổi</li>
+<li><b>Hỗ trợ đau thắt lưng</b><span data-ma="thatlung">250.000</span> đồng một buổi</li>
+<li><b>Hỗ trợ thoát vị đĩa đệm</b><span data-ma="thoatvi">250.000</span> đồng một buổi</li>
+<li><b>Hỗ trợ suy giãn tĩnh mạch</b><span data-ma="tinhmach">250.000</span> đồng một buổi</li>
+<li><b>Châm cứu</b><span data-ma="chamcuu">300.000</span> đồng một buổi</li>
+<li><b>Châm cứu kết hợp bấm huyệt</b><span data-ma="chamcuubh">400.000</span> đồng một buổi</li>
+<li><b>Giác hơi</b><span data-ma="giachoi">100.000</span> đồng một lần</li>
 <li><b>Phiếu liệu trình</b>Mua 10 buổi, tặng 1 buổi</li>
 </ul>
+<h2>Tích điểm thành viên</h2>
+<ul>
+<li><b>Mỗi lần đến</b>Được 1 điểm</li>
+<li><b>10 điểm</b>Đổi 1 lần giác hơi</li>
+<li><b>20 điểm</b>Đổi 1 buổi bấm huyệt toàn thân</li>
+</ul>
+<p>Tích điểm và đặt lịch có trong ứng dụng Bấm huyệt Thanh Tùng trên điện thoại Android.</p>
+<h2>Kỹ thuật viên</h2>
+<p>Kỹ thuật viên có kinh nghiệm, được đào tạo tại các trường như Viện Y học Dân tộc, Đại học Y Dược.</p>
 <p>Dịch vụ có tác dụng hỗ trợ, kết quả khác nhau tùy từng người. Dịch vụ không thay thế việc khám và điều trị của bác sĩ. Nếu đang dùng thuốc, xin tiếp tục theo chỉ định của bác sĩ.</p>
 
 <h2>Đặt lịch</h2>
@@ -56,7 +67,7 @@ header a.btn{background:#fff;color:var(--brand);border-color:#fff}
 <label for="dv">Dịch vụ</label>
 <select id="dv" required>
 <option value="">Chọn dịch vụ</option>
-<option>Bấm huyệt toàn thân</option><option>Hỗ trợ đau cổ vai gáy</option><option>Hỗ trợ đau thắt lưng</option><option>Hỗ trợ thoát vị đĩa đệm</option><option>Hỗ trợ suy giãn tĩnh mạch</option><option>Giác hơi</option>
+<option>Bấm huyệt toàn thân</option><option>Hỗ trợ đau cổ vai gáy</option><option>Hỗ trợ đau thắt lưng</option><option>Hỗ trợ thoát vị đĩa đệm</option><option>Hỗ trợ suy giãn tĩnh mạch</option><option>Châm cứu</option><option>Châm cứu kết hợp bấm huyệt</option><option>Giác hơi</option>
 </select>
 <label for="ngay">Ngày đến</label><input id="ngay" type="date" required>
 <label for="gio">Giờ đến</label><input id="gio" type="time" required>
@@ -110,6 +121,11 @@ var r=await fetch("https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com/pi
 if(r.ok){piSessionToken=(await r.json()).sessionToken}
 }catch(e){console.log("Pi Auth:",e)}
 })();
+</script>
+<script>
+fetch("https://docs.google.com/spreadsheets/d/1u4ACJQul8zkTN3kb-5aYZVN3bKeqIrz5hjlT2y1n7Yc/gviz/tq?tqx=out:csv&sheet=BangGia").then(function(r){return r.ok?r.text():""}).then(function(t){
+t.split("\n").slice(1).forEach(function(l){var c=l.split('","').map(function(x){return x.replace(/"/g,"")});var g=parseInt(c[2],10),e=document.querySelector('[data-ma="'+c[0]+'"]');if(e&&g>0)e.textContent=g.toLocaleString("vi-VN")});
+}).catch(function(){});
 </script>
 </body>
 </html>
